@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+namespace WpfaAufgabe.Commo
+{
+    public class Command : ICommand
+    {
+        private readonly Action<object> execute;
+        private readonly Predicate<object> canExecute;
+
+        
+        public Command(Action<object> execute, Predicate<object> canExecute)
+        {
+            this.execute = execute ?? throw new ArgumentNullException(nameof(execute), "The action cann no be null.");
+            this.canExecute = canExecute ?? throw new ArgumentNullException(nameof(canExecute), "The Predicate cann not be null.");
+        }
+
+
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return canExecute(parameter);
+        }
+
+        public void Execute(object parameter)
+        {
+            execute(parameter);
+        }
+    }
+}
