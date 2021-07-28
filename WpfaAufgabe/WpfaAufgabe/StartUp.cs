@@ -14,17 +14,12 @@ namespace WpfaAufgabe
        
         public StartUp()
         {
-            registerTypes();
             initialize();
-        }
-
-        private void registerTypes()
-        {
-            //mainContainer.Register<MainViewModel>();
         }
 
         void initialize()
         {
+            //Container with inject the mainviewModel into the Context
             var mainView = mainContainer.Resolve<MainView>();
             mainView.Show();
         }
