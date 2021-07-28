@@ -38,32 +38,7 @@ namespace WpfaAufgabe.ViewModel
                 return _loadItemPropertiesCommand;
             }
         }
-
-        private void LoadItemsExecute(object parameters)
-
-        {
-            var NameItem = (string)parameters;
-            if (NameItem!=null)
-            {
-               Properties = TiaFileConverter.GetProperties(NameItem);
-            }
-
-        }
-
-        private bool LoadItemCanExecute()
-        {
-            if (_fileName !=null)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool OpenFileCanExecute()
-        {
-            return true;
-        }
-
+        
         public List<PropertyModel> Properties
         {
             get { return _properties; }
@@ -86,42 +61,12 @@ namespace WpfaAufgabe.ViewModel
                 OnPropertyChanged(nameof(Title));
             }
         }
-
-
+        
         public MainViewModel()
         {
-            initializeModels();
             Title = "TIA Selection Tool - Datei-Viewer" ;           
         }
 
-        private void initializeModels()
-        {
-           //Models = new List<ItemModel>();
-           //ItemModel itemModel_Project = new ItemModel();
-           //itemModel_Project.NameItem = "Model";
-           //
-           //List<PropertyModel> properties_model = new List<PropertyModel>();
-           //PropertyModel property_1 = new PropertyModel();
-           //property_1.KeyName = "Key Name";
-           //property_1.Value = "value";
-           //properties_model.Add(property_1);
-           //
-           //PropertyModel property_2 = new PropertyModel();
-           //property_2.KeyName = "Key Name";
-           //property_2.Value = "value";
-           //properties_model.Add(property_2);
-           //
-           //itemModel_Project.Properties = properties_model;
-           //
-           //Properties = itemModel_Project.Properties;
-           //
-           //ItemModel itemModel_Accesories = new ItemModel();
-           //itemModel_Accesories.NameItem = "Accesories";
-           //
-           //Models.Add(itemModel_Project);
-           //Models.Add(itemModel_Accesories);
-
-        }
        private void OpenFileExecute()
        {
             // Create OpenFileDialog
@@ -138,6 +83,30 @@ namespace WpfaAufgabe.ViewModel
                 Title += _fileName;
                 Models = TiaFileConverter.GetModels(_fileName);   
             }
+        }
+        
+        private bool OpenFileCanExecute()
+        {
+            return true;
+        }
+        
+        private void LoadItemsExecute(object parameters)
+        {
+            var NameItem = (string)parameters;
+            if (NameItem!=null)
+            {
+               Properties = TiaFileConverter.GetProperties(NameItem);
+            }
+
+        }
+
+        private bool LoadItemCanExecute()
+        {
+            if (_fileName !=null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
